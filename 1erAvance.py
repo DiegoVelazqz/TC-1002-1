@@ -14,6 +14,22 @@ from sklearn.decomposition import FactorAnalysis
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.neighbors import NeighborhoodComponentsAnalysis
 
+def dE(datos1, datos2, leng):
+    dist = 0
+    for i in range(leng):
+        dist += np.square(datos1[i] - datos2[i])
+    return np.sqrt(dist)
+
+def multknn(dfTraining, dfPredic,k):
+    y=[]
+    ll=dfPredic.values.tolist()
+    
+    for i in range(dfPredic.shape[0]):
+        dato=pd.DataFrame(ll[i])
+        result,neigh = knn(dfTraining, dato, k)
+        y.append(result)
+    return y
+
 def knn(trainingSet, inst, k):
     dists = {}
     leng = inst.shape[1]
