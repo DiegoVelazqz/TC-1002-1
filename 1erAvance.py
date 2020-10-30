@@ -13,6 +13,18 @@ from sklearn.manifold import MDS
 from sklearn.decomposition import FactorAnalysis
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.neighbors import NeighborhoodComponentsAnalysis
+import random
+
+def randomPoint():
+    newPoint = []
+    num = random.choice(range(-1000, 1000))
+    newNum = num/10
+    newPoint.append(newNum)
+        
+    num = random.choice(range(-500, 500))
+    newNum = num/10
+    newPoint.append(newNum)
+    return(newPoint)
 
 def dE(datos1, datos2, leng):
     dist = 0
@@ -95,4 +107,37 @@ emb=MDS(n_components=2)
 x5t= emb.fit_transform(X,y)
 plt.scatter(x5t[:,0],x5t[:,1],c=y)
 plt.title('Iris dataset MDS')
+plt.show()
+
+Xn=np.array([randomPoint()])
+print(Xn)
+punto = pd.DataFrame(Xn)
+data=pd.DataFrame(X3t)
+data[2]=y
+k=int(input('Con cuántos puntos cercanos quieres hacer la predicción: '))
+result,neigh = knn(data, punto, k)
+
+if result==0.0:
+    tip='Iris versicolor'
+elif result==1.0:
+    tip='Iris virginica'
+elif result==2.0:
+    tip='Iris setosa'
+else:
+    tip='N/A'
+
+print('\n\nCon ',k,' Vecinos Cercanos')
+print('\nClase predicha del punto = ',tip)
+print('Vecinos más cercanos del punto = ',neigh)
+
+puntoscercanos=pd.DataFrame(columns=data.columns)
+for i in range(len(neigh)):
+    n=data.iloc[[neigh[i]]]
+    puntoscercanos=puntoscercanos.append(n)
+
+pC=puntoscercanos.to_numpy()
+plt.scatter(X3t[:,0],X3t[:,-1],c=y)   
+plt.scatter(pC[:,0],pC[:,1],c='lime',marker='x',linewidths=(1.5))
+plt.scatter(Xn[:,0],Xn[:,1],c='red')
+plt.title('KNN')
 plt.show()
