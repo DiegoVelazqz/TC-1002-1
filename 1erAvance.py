@@ -17,11 +17,11 @@ import random
 
 def randomPoint():
     newPoint = []
-    num = random.choice(range(-1000, 1000))
+    num = random.choice(range(-1000, 450))
     newNum = num/10
     newPoint.append(newNum)
         
-    num = random.choice(range(-500, 500))
+    num = random.choice(range(-600, -250))
     newNum = num/10
     newPoint.append(newNum)
     return(newPoint)
@@ -72,7 +72,7 @@ def knn(trainingSet, inst, k):
     ordenVotos = sorted(classVotes.items(), key=operator.itemgetter(1), reverse=True)
     return(ordenVotos[0][0], neighbors)
 
-sp=pd.read_csv('/Users/diegovelazquez/Downloads/iris.csv')
+sp=pd.read_csv('iris.csv')
 sp['Tipo_Flor']=sp['Tipo_Flor'].replace(['Iris-versicolor','Iris-virginica','Iris-setosa'],[0,1,2])
 data=sp.values
 X= data[:,0:-1]
