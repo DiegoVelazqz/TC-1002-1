@@ -7,6 +7,7 @@ Created on Thu Oct 29 19:21:06 2020
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import operator
 from sklearn.manifold import Isomap
 from sklearn.manifold import MDS
 from sklearn.decomposition import FactorAnalysis
